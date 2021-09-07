@@ -1,10 +1,13 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import code.easy.*;
 
 public class LeetCode {
-
+	@Test
 	public static void main(String[] args) {
-		int output = RemoveElementClass.RemoveElement(new int[] {3,3,3,3,3,31}, 3);
-		System.out.println(output);
+		assertEquals(4, ImplementstrStrClass.ImplementstrStr("aabaaabaaac", "aabaaac"));
 	}
 
 }
