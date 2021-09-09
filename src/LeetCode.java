@@ -7,11 +7,8 @@ import code.easy.*;
 public class LeetCode {
 	@Test
 	public static void main(String[] args) {
-		int[] output = PlusOneClass.PlusOne(new int[] {8,9,9,9});
-		for(int t : output)
-		{
-			System.out.print(t + "\t");
-		}
+		String output = AddBinaryClass.AddBinary2("111", "1");
+		System.out.println(output); //    1000
 	}
 
 }
