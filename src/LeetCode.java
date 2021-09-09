@@ -7,7 +7,7 @@ import code.easy.*;
 public class LeetCode {
 	@Test
 	public static void main(String[] args) {
-		String output = AddBinaryClass.AddBinary2("111", "1");
+		int output = SqrtOfXClass.SqrtOfX(2147395599);
 		System.out.println(output); //    1000
 	}
 
