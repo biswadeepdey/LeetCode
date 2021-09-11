@@ -3,12 +3,17 @@ import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import code.easy.*;
+import code.nodes.*;
 
 public class LeetCode {
 	@Test
 	public static void main(String[] args) {
-		int output = ClimbingStairsClass.ClimbingStairs(45);
-		System.out.println(output); //    1000
+		ListNode output = RemoveDuplicatesFromSortedList.RemoveDuplicates(new ListNode(1, new ListNode(2, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(3)))))));
+		while(output != null)
+		{
+			System.out.println(output.val);
+			output = output.next;
+		}
 	}
 
 }
