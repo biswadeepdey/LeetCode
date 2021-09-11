@@ -7,7 +7,7 @@ import code.easy.*;
 public class LeetCode {
 	@Test
 	public static void main(String[] args) {
-		int output = SqrtOfXClass.SqrtOfX(2147395599);
+		int output = ClimbingStairsClass.ClimbingStairs(45);
 		System.out.println(output); //    1000
 	}
 
