@@ -24,9 +24,6 @@ public class SqrtOfXClass {
 			
 			mid = (lower + higher) / 2;
 			
-			System.out.println("" + lower + "\t" + higher + "\t" + mid + "\t" + mid*mid);
-			
-			
 			if(mid * mid == x)
 			{
 				return mid;

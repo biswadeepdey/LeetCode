@@ -3,8 +3,6 @@ package code.easy;
 public class ReverseInteger {
 	public static int Reverse(int x)
 	{
-		int INT_MAX = (int)(Math.pow(2, 31) - 1);
-		int INT_MIN = -1 * (int)(Math.pow(2, 31) - 1) - 1;
 		boolean isNegative = false;
 		if(x < 0)
 		{
