@@ -8,11 +8,13 @@ import code.nodes.*;
 public class LeetCode {
 	@Test
 	public static void main(String[] args) {
-		ListNode output = RemoveDuplicatesFromSortedList.RemoveDuplicates(new ListNode(1, new ListNode(2, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(3)))))));
-		while(output != null)
+		int[] a = new int[] {2,5,6,7,8,0,0,0};
+		int[] b = new int[] {1,2,3};
+		
+		MergeSortedArrayClass.MergeSortedArray(a, 5, b, 3);
+		for(int o : a)
 		{
-			System.out.println(output.val);
-			output = output.next;
+			System.out.println(o);
 		}
 	}
 
