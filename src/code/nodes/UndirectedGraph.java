@@ -64,6 +64,16 @@ public class UndirectedGraph<T> {
 		add(start, end, true);
 	}
 	
+	public int getVertices()
+	{
+		return vertices;
+	}
+	
+	public int getEdges()
+	{
+		return edges;
+	}
+	
 	public void traverse()
 	{
 		Queue<T> queue = new ArrayDeque<T>();

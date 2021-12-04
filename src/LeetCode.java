@@ -21,13 +21,15 @@ public class LeetCode {
 //		System.out.println(allOne.getMaxKey());
 //		System.out.println(allOne.getMinKey());
 		
-		UndirectedGraph<String> ug = new UndirectedGraph<String>(4);
-		ug.addEdge("A", "B");
-		ug.addEdge("A", "C");
-		ug.addEdge("A", "D");
-		ug.addEdge("B", "C");
-		ug.addEdge("D", "D");
-		ug.traverse();
+		DirectedGraph<String> dg = new DirectedGraph<String>(5);
+		dg.addEdge("A", "C");
+		dg.addEdge("B", "A");
+		dg.addEdge("B", "C");
+		dg.addEdge("B", "E");
+		dg.addEdge("C", "D");
+		dg.addEdge("E", "C");
+		
+		dg.topologicalSort();
 		System.out.println();
 	}
 
