@@ -18,8 +18,6 @@ public class LeetCode {
 //		allOne.inc("b");
 //		allOne.dec("b");
 //		allOne.dec("b");
-//		System.out.println(allOne.getMaxKey());
-//		System.out.println(allOne.getMinKey());
 		
 		DirectedGraph<String> dg = new DirectedGraph<String>(5);
 		dg.addEdge("A", "C");
