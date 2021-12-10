@@ -1,29 +1,85 @@
 package code.nodes;
 
 import java.util.*;
+import java.lang.*;
+
+class Edge<T>{
+	public T start;
+	public T end;
+	public Integer weight;
+	
+	public Edge(T start, T end) {this.start = start; this.end = end;}
+	public Edge(T start, T end, Integer weight) {this.start = start; this.end = end; this.weight = weight;}
+}
+
+class CostVertex<T> implements Comparable<CostVertex<T>>
+{
+	public T name;
+	public int cost;
+	
+	public CostVertex(T n, int c)
+	{
+		name = n;
+		cost = c;
+	}
+	
+	@Override
+	public int compareTo(CostVertex<T> cv)
+	{
+		if(this.cost > cv.cost)
+		{
+			return 1;
+		}
+		
+		if(this.cost < cv.cost)
+		{
+			return -1;
+		}
+		
+		return 0;
+	}
+}
+
+class CostVertexComparator<T> implements Comparator<CostVertex<T>>
+{
+	@Override
+	public int compare(CostVertex<T> a, CostVertex<T> b)
+	{
+		if(a.cost > b.cost)
+		{
+			return 1;
+		}
+		
+		if(a.cost < b.cost)
+		{
+			return -1;
+		}
+		
+		return 0;
+	}
+}
 
 public class DirectedGraph<T> {
-	private int vertices;
-	private int edges;
 	private Map<T, GListNode<T>> adjList;
 	private T headNode;
-	private Set<T> visited;
+	private Set<T> Vertices;
 	private Map<T, Integer> inbound;
 	private Map<T, Integer> outbound;
+	private Map<String, Edge<T>> Edges;
 	
 	Queue<String> l;
 	
-	public DirectedGraph(int v)
+	public DirectedGraph()
 	{
-		vertices = v;
 		adjList = new HashMap<T, GListNode<T>>();
 		headNode = null;
-		visited = new HashSet<T>();
+		Vertices = new HashSet<T>();
 		inbound = new HashMap<T, Integer>();
 		outbound = new HashMap<T, Integer>();
+		Edges = new HashMap<String, Edge<T>>();
 	}
 	
-	public void addEdge(T start, T end)
+	private void add(T start, T end, Integer weight)
 	{
 		if(adjList.containsKey(start))
 		{
@@ -47,7 +103,7 @@ public class DirectedGraph<T> {
 				headNode = start;
 			}
 		}
-		
+				
 		if(outbound.containsKey(start))
 		{
 			outbound.put(start, outbound.get(start)+ 1);
@@ -76,24 +132,37 @@ public class DirectedGraph<T> {
 			outbound.put(end, 0);
 		}
 		
-		edges++;
+		Vertices.add(start); Vertices.add(end);
+		
+		String key = start.toString() + "-" + end.toString();
+		Edges.put(key, weight != null ? new Edge<T>(start, end, weight) : new Edge<T>(start, end));
 	}
 	
-	public int getVertices()
+	public void addEdge(T start, T end)
 	{
-		return vertices;
+		add(start, end, null);
 	}
 	
-	public int getEdges()
+	public void addEdge(T start, T end, int weight)
 	{
-		return edges;
+		add(start, end, weight);
+	}
+	
+	public int getvertexCount()
+	{
+		return Vertices.size();
+	}
+	
+	public int getedgeCount()
+	{
+		return Edges.size();
 	}
 	
 	public void traverse()
 	{
 		Queue<T> queue = new ArrayDeque<T>();
 		GListNode<T> p = adjList.get(headNode);
-		
+		Set<T> visited = new HashSet<T>();
 		queue.add(p.val);
 		visited.add(p.val);
 		
@@ -112,6 +181,14 @@ public class DirectedGraph<T> {
 				}
 				pList = pList.next;
 			}
+		}
+	}
+	
+	public void showEdges()
+	{
+		for(Map.Entry<String, Edge<T>> entry: Edges.entrySet())
+		{
+			System.out.println(entry.getKey() + ": " + entry.getValue().start + ", " + entry.getValue().end + ", " + entry.getValue().weight);
 		}
 	}
 	
@@ -152,6 +229,98 @@ public class DirectedGraph<T> {
 				head = head.next;
 			}
 		}
+	}
+	
+	public void djikstra(T sourceName)
+	{
+		PriorityQueue<CostVertex<T>> pq = new PriorityQueue<CostVertex<T>>();
+		Set<T> visited = new HashSet<T>();
+		Map<T, Integer> mapDist = new HashMap<T, Integer>();
 		
+		Vertices.forEach(vertex -> {mapDist.put(vertex, Integer.MAX_VALUE);});
+		
+		// setting up the source with 0 cost
+		pq.add(new CostVertex<T>(sourceName, 0));
+		mapDist.put(sourceName, 0);
+		
+		while(pq.peek() != null)
+		{
+			CostVertex<T> cv = pq.poll();
+			
+			if(visited.contains(cv.name))
+			{
+				continue;
+			}
+			
+			visited.add(cv.name);
+			
+			GListNode<T> cvAdjListPtr = adjList.get(cv.name);
+			while(cvAdjListPtr != null)
+			{
+				int edgeCost = Edges.get(cv.name+"-"+cvAdjListPtr.val).weight;
+				int currCost = mapDist.get(cvAdjListPtr.val);
+				
+				if(currCost > edgeCost + mapDist.get(cv.name))
+				{
+					currCost = edgeCost + mapDist.get(cv.name);
+					mapDist.put(cvAdjListPtr.val, currCost);
+				}
+				
+				if(!visited.contains(cvAdjListPtr.val))
+				{
+					pq.add(new CostVertex<T>(cvAdjListPtr.val, currCost));
+				}
+				
+				cvAdjListPtr = cvAdjListPtr.next;
+			}
+		}
+		
+		
+		for(Map.Entry<T, Integer> entry : mapDist.entrySet())
+		{
+			System.out.println(entry.getKey() + ", " + entry.getValue());
+		}
+	}
+	
+	public void bellmanFord(T sourceName)
+	{
+		Map<T, Integer> costMap = new HashMap<T, Integer>();
+		Vertices.forEach(v->costMap.put(v, Integer.MAX_VALUE));
+		
+		costMap.put(sourceName, 0);
+		
+		Queue<T> q = new LinkedList<T>();
+		q.add(sourceName);
+		
+		while(!q.isEmpty())
+		{
+			T src = q.poll();
+			GListNode<T> adjPtr = adjList.get(src);
+			
+			while(adjPtr != null)
+			{
+				T dest = adjPtr.val;
+				int edgeCost = Edges.get(src+"-"+dest).weight;
+				int srcCost = costMap.get(src);
+				int destCost = costMap.get(dest);
+				
+				if(destCost > srcCost + edgeCost)
+				{
+					costMap.put(dest, srcCost + edgeCost);
+					
+					if(!q.contains(dest))
+					{
+						q.add(dest);
+					}
+				}
+				
+				adjPtr = adjPtr.next;
+			}
+		}
+		
+		for(Map.Entry<T, Integer> entry : costMap.entrySet())
+		{
+			System.out.println(entry.getKey() + ", " + entry.getValue());
+		}
 	}
 }
