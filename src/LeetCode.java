@@ -88,20 +88,32 @@ public class LeetCode {
 //		allOne.dec("b");
 //		allOne.dec("b");
 		
-		DirectedGraph<String> dg = new DirectedGraph<String>();
+		Graph<String> dg = new Graph<String>(false);
 		dg.addEdge("A", "B", 6);
 		dg.addEdge("A", "E", 5);
 		dg.addEdge("A", "F", 5);
-		dg.addEdge("B", "C", -1);
+		dg.addEdge("B", "C", 1);
 		dg.addEdge("C", "D", 3);
-		dg.addEdge("E", "B", -2);
+		dg.addEdge("E", "B", 2);
 		dg.addEdge("E", "C", 1);
-		dg.addEdge("F", "E", -2);
-		dg.addEdge("F", "G", -1);
+		dg.addEdge("F", "E", 2);
+		dg.addEdge("F", "G", 1);
 		dg.addEdge("G", "D", 3);
+
+//		dg.addEdge("A", "B", 3);
+//		dg.addEdge("B", "C", 3);
+//		dg.addEdge("A", "C", 3);
+//		dg.addEdge("B", "D", 6);
+//		dg.addEdge("C", "D", 4);
+//		dg.addEdge("C", "E", 3);
+//		dg.addEdge("D", "E", 2);
+//		dg.addEdge("D", "F", 5);
+//		dg.addEdge("E", "F", 2);
 		
 		
-		dg.bellmanFord("A");
+		dg.prim("A");
+//		System.out.println(dg.getVertexCount());
+//		System.out.println(dg.getEdgeCount());
 		
 		
 		

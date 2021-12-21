@@ -59,7 +59,9 @@ class CostVertexComparator<T> implements Comparator<CostVertex<T>>
 	}
 }
 
-public class DirectedGraph<T> {
+
+public class Graph<T> {
+	private boolean isDirected;
 	private Map<T, GListNode<T>> adjList;
 	private T headNode;
 	private Set<T> Vertices;
@@ -69,8 +71,9 @@ public class DirectedGraph<T> {
 	
 	Queue<String> l;
 	
-	public DirectedGraph()
+	public Graph(boolean isDirected)
 	{
+		this.isDirected = isDirected;
 		adjList = new HashMap<T, GListNode<T>>();
 		headNode = null;
 		Vertices = new HashSet<T>();
@@ -104,32 +107,35 @@ public class DirectedGraph<T> {
 			}
 		}
 				
-		if(outbound.containsKey(start))
+		if(this.isDirected)
 		{
-			outbound.put(start, outbound.get(start)+ 1);
-		}
-		else
-		{
-			outbound.put(start, 1);
-		}
-		
-		if(!inbound.containsKey(start))
-		{
-			inbound.put(start, 0);
-		}
-		
-		if(inbound.containsKey(end))
-		{
-			inbound.put(end, inbound.get(end)+ 1);
-		}
-		else
-		{
-			inbound.put(end, 1);
-		}
-		
-		if(!outbound.containsKey(end))
-		{
-			outbound.put(end, 0);
+			if(outbound.containsKey(start))
+			{
+				outbound.put(start, outbound.get(start)+ 1);
+			}
+			else
+			{
+				outbound.put(start, 1);
+			}
+			
+			if(!inbound.containsKey(start))
+			{
+				inbound.put(start, 0);
+			}
+			
+			if(inbound.containsKey(end))
+			{
+				inbound.put(end, inbound.get(end)+ 1);
+			}
+			else
+			{
+				inbound.put(end, 1);
+			}
+			
+			if(!outbound.containsKey(end))
+			{
+				outbound.put(end, 0);
+			}
 		}
 		
 		Vertices.add(start); Vertices.add(end);
@@ -141,21 +147,29 @@ public class DirectedGraph<T> {
 	public void addEdge(T start, T end)
 	{
 		add(start, end, null);
+		if(!isDirected)
+		{
+			add(end, start, null);
+		}
 	}
 	
 	public void addEdge(T start, T end, int weight)
 	{
 		add(start, end, weight);
+		if(!isDirected)
+		{
+			add(end, start, weight);
+		}
 	}
 	
-	public int getvertexCount()
+	public int getVertexCount()
 	{
 		return Vertices.size();
 	}
 	
-	public int getedgeCount()
+	public int getEdgeCount()
 	{
-		return Edges.size();
+		return isDirected ? Edges.size() : Edges.size() / 2;
 	}
 	
 	public void traverse()
@@ -321,6 +335,79 @@ public class DirectedGraph<T> {
 		for(Map.Entry<T, Integer> entry : costMap.entrySet())
 		{
 			System.out.println(entry.getKey() + ", " + entry.getValue());
+		}
+	}
+
+	private T findMinVertex(PriorityQueue<CostVertex<T>> pq, Set<T> notInMst)
+	{
+		CostVertex<T> cv = null;
+		while(pq.peek() != null)
+		{
+			cv = pq.poll();
+			if(notInMst.contains(cv.name))
+			{
+				break;
+			}
+			else
+			{
+				continue;
+			}
+		}
+		
+		return cv.name;
+	}
+	
+	public void prim(T sourceName)
+	{
+		Set<T> notInMst = new HashSet<T>();
+		Map<T, CostVertex<T>> costMap = new HashMap<T, CostVertex<T>>();
+		Set<T> mst = new HashSet<T>();
+		PriorityQueue<CostVertex<T>> pq = new PriorityQueue<CostVertex<T>>();
+		
+		Vertices.forEach(vertex -> {
+			int cost = Integer.MAX_VALUE;
+			if(vertex == sourceName)
+			{
+				cost = 0;
+			}
+			
+			notInMst.add(vertex);
+			costMap.put(vertex, new CostVertex<T>(null, cost));
+			pq.add(new CostVertex<T>(vertex, cost));
+		});
+		
+		while(!pq.isEmpty())
+		{
+			T source = findMinVertex(pq, notInMst);
+			System.out.println(source);			
+			mst.add(source);
+			notInMst.remove(source);
+			
+			if(costMap.get(source).name != null)
+			{
+				mst.add(costMap.get(source).name);
+				notInMst.remove(costMap.get(source).name);
+			}
+			
+			GListNode<T> adjPtr = adjList.get(source);
+			
+			while(adjPtr != null)
+			{
+				T dest = adjPtr.val;
+				int edgeCost = Edges.get(source+"-"+dest).weight;
+				if(notInMst.contains(dest) && costMap.get(dest).cost > edgeCost)
+				{
+					costMap.put(dest, new CostVertex<T>(source, edgeCost));
+					pq.add(new CostVertex<T>(dest, edgeCost));
+				}
+				
+				adjPtr = adjPtr.next;
+			}
+		}
+		
+		for(Map.Entry<T, CostVertex<T>> entry : costMap.entrySet())
+		{
+			System.out.println(entry.getKey() + ", " + entry.getValue().name);
 		}
 	}
 }
