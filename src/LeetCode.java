@@ -88,17 +88,17 @@ public class LeetCode {
 //		allOne.dec("b");
 //		allOne.dec("b");
 		
-		Graph<String> dg = new Graph<String>(false);
-		dg.addEdge("A", "B", 6);
-		dg.addEdge("A", "E", 5);
-		dg.addEdge("A", "F", 5);
-		dg.addEdge("B", "C", 1);
-		dg.addEdge("C", "D", 3);
-		dg.addEdge("E", "B", 2);
-		dg.addEdge("E", "C", 1);
-		dg.addEdge("F", "E", 2);
-		dg.addEdge("F", "G", 1);
-		dg.addEdge("G", "D", 3);
+//		Graph<String> dg = new Graph<String>(false);
+//		dg.addEdge("A", "B", 6);
+//		dg.addEdge("A", "E", 5);
+//		dg.addEdge("A", "F", 5);
+//		dg.addEdge("B", "C", 1);
+//		dg.addEdge("C", "D", 3);
+//		dg.addEdge("E", "B", 2);
+//		dg.addEdge("E", "C", 1);
+//		dg.addEdge("F", "E", 2);
+//		dg.addEdge("F", "G", 1);
+//		dg.addEdge("G", "D", 3);
 
 //		dg.addEdge("A", "B", 3);
 //		dg.addEdge("B", "C", 3);
@@ -111,7 +111,7 @@ public class LeetCode {
 //		dg.addEdge("E", "F", 2);
 		
 		
-		dg.prim("A");
+//		dg.prim("A");
 //		System.out.println(dg.getVertexCount());
 //		System.out.println(dg.getEdgeCount());
 		
@@ -146,6 +146,13 @@ F, 6
 //		
 //		s.forEach(node -> System.out.println(node.data + ", " + node.priority));
 //		
+		int[] nums = new int[] {7,9,6};
+		NextPermutationClass.nextPermutation(nums);
+		for(int i : nums)
+		{
+			System.out.print(i + ", ");
+		}
+		
 		System.out.println();
 	}
 
