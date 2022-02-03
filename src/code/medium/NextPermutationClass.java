@@ -25,7 +25,6 @@ public class NextPermutationClass {
 		// from right find the next closest higher value
 		int j = nums.length - 1;
 
-		int position = -1, lastMinDiff = Integer.MAX_VALUE;
 		while (j > i && nums[i] >= nums[j]) {
 			j--;
 		}

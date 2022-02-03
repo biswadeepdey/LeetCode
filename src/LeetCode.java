@@ -4,6 +4,7 @@ import code.easy.*;
 import code.medium.*;
 import code.hard.*;
 import code.nodes.*;
+import code.exercise.*;
 import java.util.*;
 
 class Node implements Comparable<Node>
@@ -78,82 +79,73 @@ class NodeComparator implements Comparator<Node>
 }
 
 public class LeetCode {
-	public static void main(String[] args) {
-//		AllOne allOne = new AllOne();
-//		allOne.inc("a");
-//		allOne.inc("b");
-//		allOne.inc("b");
-//		allOne.inc("b");
-//		allOne.inc("b");
-//		allOne.dec("b");
-//		allOne.dec("b");
+	
+	static boolean canConstruct(String target, Vector<String> wordBank)
+	{
+		if(target.equals("")) return true;
 		
-//		Graph<String> dg = new Graph<String>(false);
-//		dg.addEdge("A", "B", 6);
-//		dg.addEdge("A", "E", 5);
-//		dg.addEdge("A", "F", 5);
-//		dg.addEdge("B", "C", 1);
-//		dg.addEdge("C", "D", 3);
-//		dg.addEdge("E", "B", 2);
-//		dg.addEdge("E", "C", 1);
-//		dg.addEdge("F", "E", 2);
-//		dg.addEdge("F", "G", 1);
-//		dg.addEdge("G", "D", 3);
-
-//		dg.addEdge("A", "B", 3);
-//		dg.addEdge("B", "C", 3);
-//		dg.addEdge("A", "C", 3);
-//		dg.addEdge("B", "D", 6);
-//		dg.addEdge("C", "D", 4);
-//		dg.addEdge("C", "E", 3);
-//		dg.addEdge("D", "E", 2);
-//		dg.addEdge("D", "F", 5);
-//		dg.addEdge("E", "F", 2);
-		
-		
-//		dg.prim("A");
-//		System.out.println(dg.getVertexCount());
-//		System.out.println(dg.getEdgeCount());
-		
-		
-		
-//		TreeSet<Node> t = new TreeSet<Node>();
-//		t.add(new Node("a", 1));
-//		t.add(new Node("b", 2));
-//		t.add(new Node("a", 4));
-//		t.add(new Node("b", 3));
-//		SortedSet<Node> s = new TreeSet<Node>(t);
-//		PriorityQueue<Node> pq = new PriorityQueue<Node>(s);
-
-		/*
-		 *A, 0
-B, 3
-C, 1
-D, 5
-E, 7
-F, 6
-		 * */
-		
-//		Node a = new Node("a", 1);
-//		pq.add(a);
-//		Node b = new Node("b", 2);
-//		pq.add(b);
-//		Node c = new Node("c", 3);
-//		pq.add(c);
-//		
-//		a.priority = 5;
-//		pq.add(a);
-//		
-//		s.forEach(node -> System.out.println(node.data + ", " + node.priority));
-//		
-		int[] nums = new int[] {7,9,6};
-		NextPermutationClass.nextPermutation(nums);
-		for(int i : nums)
+		for(String word : wordBank)
 		{
-			System.out.print(i + ", ");
+			if(target.indexOf(word) == 0)
+			{
+				String suffix = target.substring(word.length());
+				if(canConstruct(suffix, wordBank))
+				{
+					return true;
+				}
+			}
 		}
 		
-		System.out.println();
+		return false;
+	}
+	
+	public static void main(String[] args) {
+		
+		
+		System.out.println(Integer.min(2,2));
+		
+//		List<String> l = new LinkedList<String>();
+//		List<List<String>> equations = new LinkedList<List<String>>(); 
+//		l.add("a");l.add("b");
+//		equations.add(l);
+//		l = new LinkedList<String>();
+//		l.add("b");l.add("c");
+//		equations.add(l);
+//		
+//		double[] values = new double[] {2.0,3.0};
+//		
+//		List<String> q = new LinkedList<String>();
+//		List<List<String>> queries = new LinkedList<List<String>>(); 
+//		q.add("a");q.add("c");
+//		queries.add(q);
+//		q = new LinkedList<String>();
+//		q.add("b");q.add("a");
+//		queries.add(q);
+//		q = new LinkedList<String>();
+//		q.add("a");q.add("e");
+//		queries.add(q);
+//		q = new LinkedList<String>();
+//		q.add("a");q.add("a");
+//		queries.add(q);
+//		q = new LinkedList<String>();
+//		q.add("x");q.add("x");
+//		queries.add(q);
+//		
+//		double[] d = EvaluateDivisionClass.calcEquation(equations, values, queries);
+//		for(int i = 0; i < d.length; i++)
+//		{
+//			System.out.println(d[i]);
+//		}
+		
+//		int[] nums = new int[] {10, 20, 30, 40};
+//		int[] arr = NextGreaterElementClass.NextGreaterElement(nums);
+//		for(int i = 0; i < arr.length; i++)
+//		{
+//			System.out.print(arr[i] + ", ");
+//		}
+		
+		System.out.print("\n");
+		
 	}
 
 }
