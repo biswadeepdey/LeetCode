@@ -79,73 +79,16 @@ class NodeComparator implements Comparator<Node>
 }
 
 public class LeetCode {
-	
-	static boolean canConstruct(String target, Vector<String> wordBank)
-	{
-		if(target.equals("")) return true;
-		
-		for(String word : wordBank)
-		{
-			if(target.indexOf(word) == 0)
-			{
-				String suffix = target.substring(word.length());
-				if(canConstruct(suffix, wordBank))
-				{
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-	
 	public static void main(String[] args) {
+		ListNode l1 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4))));
+		ReorderListClass.reorderList2(l1);
 		
-		
-		System.out.println(Integer.min(2,2));
-		
-//		List<String> l = new LinkedList<String>();
-//		List<List<String>> equations = new LinkedList<List<String>>(); 
-//		l.add("a");l.add("b");
-//		equations.add(l);
-//		l = new LinkedList<String>();
-//		l.add("b");l.add("c");
-//		equations.add(l);
-//		
-//		double[] values = new double[] {2.0,3.0};
-//		
-//		List<String> q = new LinkedList<String>();
-//		List<List<String>> queries = new LinkedList<List<String>>(); 
-//		q.add("a");q.add("c");
-//		queries.add(q);
-//		q = new LinkedList<String>();
-//		q.add("b");q.add("a");
-//		queries.add(q);
-//		q = new LinkedList<String>();
-//		q.add("a");q.add("e");
-//		queries.add(q);
-//		q = new LinkedList<String>();
-//		q.add("a");q.add("a");
-//		queries.add(q);
-//		q = new LinkedList<String>();
-//		q.add("x");q.add("x");
-//		queries.add(q);
-//		
-//		double[] d = EvaluateDivisionClass.calcEquation(equations, values, queries);
-//		for(int i = 0; i < d.length; i++)
-//		{
-//			System.out.println(d[i]);
-//		}
-		
-//		int[] nums = new int[] {10, 20, 30, 40};
-//		int[] arr = NextGreaterElementClass.NextGreaterElement(nums);
-//		for(int i = 0; i < arr.length; i++)
-//		{
-//			System.out.print(arr[i] + ", ");
-//		}
-		
-		System.out.print("\n");
-		
+		ListNode p = l1;
+		while(p != null)
+		{
+			System.out.println(p.val);
+			p = p.next;
+		}
 	}
 
 }
